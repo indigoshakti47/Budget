@@ -1,6 +1,7 @@
 import React , {Fragment, useState} from 'react'
+import Error from './Error'
 
-const Question  = () => {
+const Question  = ({saveBudget, saveRemainder}) => {
     const [amount, saveAmount] = useState(0);
     const [error, saveError] = useState(false);
     const addBudget = e => {
@@ -9,13 +10,16 @@ const Question  = () => {
             saveError(true);
             return;
         }
-        saveError(false)
+        saveError(false);
+        saveBudget(amount);
+        saveRemainder(amount);
     }
 
 
     return ( 
         <Fragment>
             <h2> What's your budget </h2>
+            { error ? <Error msg="The budget value is invalid"/> : null}
             <form 
             onSubmit={addBudget}
             >
